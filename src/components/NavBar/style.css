@@ -1,0 +1,26 @@
+.MuiAppBar-colorPrimary.custom-navbar {
+  background-color: #121212;
+}
+
+.MuiAppBar-colorPrimary.custom-navbar > div > div {
+  padding: 0;
+}
+.cart-wrapper {
+  flex-grow: 1;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.custom-navbar .custom-title {
+  display: flex;
+}
+
+.custom-navbar .custom-title .logo {
+  width: 100px;
+  height: 100px;
+}
+
+.cart-wrapper .custom-cart {
+  font-size: 45px;
+  color: #bb86fc;
+}
