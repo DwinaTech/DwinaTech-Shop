@@ -5,7 +5,7 @@
 .MuiAppBar-colorPrimary.custom-navbar > div > div {
   padding: 0;
 }
-.cart-wrapper {
+.basket-wrapper {
   flex-grow: 1;
   justify-content: flex-end;
   display: flex;
@@ -20,7 +20,7 @@
   height: 100px;
 }
 
-.cart-wrapper .custom-cart {
+.basket-wrapper .custom-basket {
   font-size: 45px;
   color: #bb86fc;
 }
