@@ -20,13 +20,18 @@ const App = () => {
     setBasketData(response);
   };
 
-  const updateBasketData = async (productId) => {
-    const response = await commerce.cart.add(productId, 1);
+  const addProduct = async (productId, quantity) => {
+    const response = await commerce.cart.add(productId, quantity);
     setBasketData(response);
   };
 
   const RemoveItemFromBasket = async (itemId) => {
-    const response = await commerce.cart.remove(itemId, 1);
+    const response = await commerce.cart.remove(itemId);
+    setBasketData(response);
+  };
+
+  const updateProduct = async (productId, quantity) => {
+    const response = await commerce.cart.update(productId, { quantity });
     setBasketData(response);
   };
 
@@ -34,21 +39,31 @@ const App = () => {
     if (!products.length) {
       fetchProducts();
     }
-    fetchBasketData();
-  }, [products, basketData]);
+    if (!basketData.total_items) {
+      fetchBasketData();
+    }
+  }, [products, basketData, basketData.total_items]);
 
   return (
     <Router>
       <div>
         <CssBaseline />
-        <NavBar basketItems={basketData.total_items} />
+        <NavBar
+          basketItems={basketData.total_items}
+          totalCost={
+            (basketData.subtotal &&
+              basketData.subtotal.formatted_with_symbol) ||
+            "00.00"
+          }
+        />
         <Switch>
           <Route exact path="/">
-            <Products products={products} updateBasketData={updateBasketData} />
+            <Products products={products} addProduct={addProduct} />
           </Route>
           <Route exact path="/basket">
             <Basket
               basketData={basketData}
+              updateProduct={updateProduct}
               RemoveItemFromBasket={RemoveItemFromBasket}
             />
           </Route>
