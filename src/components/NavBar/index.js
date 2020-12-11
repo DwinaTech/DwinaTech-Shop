@@ -13,7 +13,7 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "./DwinaTech-logo.png";
 import "./style.css";
 
-const NavBar = ({ basketItems }) => {
+const NavBar = ({ basketItems, totalCost }) => {
   const location = useLocation();
 
   return (
@@ -35,7 +35,7 @@ const NavBar = ({ basketItems }) => {
                 className="logo"
               />
             </Typography>
-            {location.pathname === "/" && (
+            {location.pathname === "/" ? (
               <div className="basket-wrapper">
                 <IconButton
                   component={Link}
@@ -47,6 +47,12 @@ const NavBar = ({ basketItems }) => {
                     <ShoppingCart className="custom-basket" />
                   </Badge>
                 </IconButton>
+              </div>
+            ) : (
+              <div className="basket-wrapper">
+                <h2>
+                  Total cost: <strong>{totalCost}</strong>
+                </h2>
               </div>
             )}
           </Toolbar>

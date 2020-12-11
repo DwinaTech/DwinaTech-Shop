@@ -1,16 +1,11 @@
 import React from "react";
 import CustomCard from "../CustomCard";
 
-const Product = ({
-  basket,
-  product,
-  updateBasketData,
-  RemoveItemFromBasket,
-}) => (
+const Product = ({ basket, product, addProduct, RemoveItemFromBasket }) => (
   <CustomCard
     basket={basket}
     product={product}
-    updateBasketData={updateBasketData}
+    addProduct={addProduct}
     RemoveItemFromBasket={RemoveItemFromBasket}
   />
 );

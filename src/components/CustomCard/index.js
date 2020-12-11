@@ -14,7 +14,8 @@ import "./style.css";
 const CustomCard = ({
   basket,
   product,
-  updateBasketData,
+  addProduct,
+  updateProduct,
   RemoveItemFromBasket,
 }) => {
   return (
@@ -23,7 +24,8 @@ const CustomCard = ({
         <CardMedia
           component="img"
           alt="Contemplative Reptile"
-          height="280"
+          height="260"
+          className="card-image"
           image={product.media.source}
           title="Contemplative Reptile"
         />
@@ -36,42 +38,78 @@ const CustomCard = ({
           >
             {product.name}
           </Typography>
-          {/* <Typography variant="body2" color="textSecondary" component="p">
-            {product.description &&
-              product.description.replace("<p>", "").replace("</p>", "")}
-          </Typography> */}
+        </CardContent>
+      </CardActionArea>
+      {basket && (
+        <CardActions>
           <Typography
-            className="price"
+            className="basket-item-price"
             gutterBottom
             variant="h5"
             component="h2"
           >
             {product.price.formatted_with_symbol}
           </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
+        </CardActions>
+      )}
+      <CardActions className="actions-content">
         {!basket && (
-          <Button
-            size="large"
-            className="custom-button"
-            onClick={() => {
-              updateBasketData(product.id);
-            }}
-          >
-            <ShoppingCart /> Add to basket
-          </Button>
+          <>
+            <Typography
+              className="price"
+              gutterBottom
+              variant="h5"
+              component="h2"
+            >
+              {product.price.formatted_with_symbol}
+            </Typography>
+            <Button
+              size="large"
+              className="custom-button"
+              onClick={() => {
+                addProduct(product.id, 1);
+              }}
+            >
+              <ShoppingCart /> Add to basket
+            </Button>
+          </>
         )}
         {basket && (
-          <Button
-            color="secondary"
-            size="small"
-            onClick={() => {
-              RemoveItemFromBasket(product.id);
-            }}
-          >
-            Remove
-          </Button>
+          <>
+            <Button
+              size="small"
+              color="secondary"
+              variant="outlined"
+              onClick={() => {
+                RemoveItemFromBasket(product.id);
+              }}
+            >
+              Remove
+            </Button>
+            <>
+              <Button
+                size="small"
+                variant="outlined"
+                className="increase-product-quantity"
+                onClick={() => {
+                  updateProduct(product.id, product.quantity + 1);
+                }}
+              >
+                +
+              </Button>
+              <Typography>&nbsp;{product.quantity}&nbsp;</Typography>
+              <Button
+                size="small"
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  updateProduct(product.id, product.quantity - 1);
+                }}
+              >
+                -
+              </Button>
+            </>
+          </>
         )}
       </CardActions>
     </Card>
