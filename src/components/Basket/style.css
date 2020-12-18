@@ -1,3 +1,41 @@
 #basket {
   margin-top: 120px;
+  padding-bottom: 15px;
+}
+
+#basket .MuiButton-containedSecondary {
+  color: #0d1117;
+}
+
+.actions {
+  margin-top: 15px;
+}
+/* ========= Basket Banner =========== */
+.basket-banner {
+  padding-top: 150px;
+}
+
+.basket-banner > div {
+  align-items: center;
+}
+
+.basket-banner .brand {
+  display: flex;
+  align-items: center;
+}
+
+.basket-banner .brand svg {
+  width: 100%;
+  font-size: 220px;
+}
+
+.basket-banner .title {
+  font-size: 45px;
+  margin-bottom: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.basket-banner a.shopping-button {
+  color: #000000;
+  background-color: #03dac5;
 }

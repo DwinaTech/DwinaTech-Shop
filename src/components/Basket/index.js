@@ -1,11 +1,18 @@
 import React from "react";
-import { Grid, Container } from "@material-ui/core";
+import { Grid, Button, Container } from "@material-ui/core";
 import CustomCard from "../CustomCard";
+import Banner from "./Banner";
+
 import "./style.css";
 
-const Basket = ({ basketData, updateProduct, RemoveItemFromBasket }) => {
+const Basket = ({
+  basketData,
+  updateProduct,
+  handleEmptyBasket,
+  RemoveItemFromBasket,
+}) => {
   if (!basketData.line_items || !basketData.line_items.length)
-    return <p id="basket">Loading...</p>;
+    return <Banner />;
   return (
     <Container id="basket">
       <Grid container justify="center" spacing={4}>
@@ -22,6 +29,16 @@ const Basket = ({ basketData, updateProduct, RemoveItemFromBasket }) => {
           );
         })}
       </Grid>
+      <div className="actions">
+        <Button
+          size="small"
+          color="secondary"
+          variant="contained"
+          onClick={handleEmptyBasket}
+        >
+          Empty Basket
+        </Button>
+      </div>
     </Container>
   );
 };
