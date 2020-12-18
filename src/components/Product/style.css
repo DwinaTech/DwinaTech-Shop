@@ -1,6 +1,6 @@
 .MuiCard-root.product-card {
   background-color: #121212;
-  color: #eeeeee;
+  color: #c9d1d9;
   transition: all 0.5s ease-in-out;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .product-card p {
-  color: #eeeeee;
+  color: #c9d1d9;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
