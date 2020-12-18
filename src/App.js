@@ -22,27 +22,28 @@ const App = () => {
 
   const addProduct = async (productId, quantity) => {
     const response = await commerce.cart.add(productId, quantity);
-    setBasketData(response);
+    setBasketData(response.cart);
   };
 
   const RemoveItemFromBasket = async (itemId) => {
     const response = await commerce.cart.remove(itemId);
-    setBasketData(response);
+    setBasketData(response.cart);
+  };
+
+  const handleEmptyBasket = async () => {
+    const response = await commerce.cart.empty();
+    setBasketData(response.cart);
   };
 
   const updateProduct = async (productId, quantity) => {
     const response = await commerce.cart.update(productId, { quantity });
-    setBasketData(response);
+    setBasketData(response.cart);
   };
 
   useEffect(() => {
-    if (!products.length) {
-      fetchProducts();
-    }
-    if (!basketData.total_items) {
-      fetchBasketData();
-    }
-  }, [products, basketData, basketData.total_items]);
+    fetchProducts();
+    fetchBasketData();
+  }, []);
 
   return (
     <Router>
@@ -64,6 +65,7 @@ const App = () => {
             <Basket
               basketData={basketData}
               updateProduct={updateProduct}
+              handleEmptyBasket={handleEmptyBasket}
               RemoveItemFromBasket={RemoveItemFromBasket}
             />
           </Route>
