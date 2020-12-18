@@ -9,7 +9,6 @@ import {
 import { ShoppingCart } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 
-import logo from "./DwinaTech-logo.png";
 import "./style.css";
 
 const NavBar = ({ basketItems, totalCost }) => {
@@ -28,7 +27,7 @@ const NavBar = ({ basketItems, totalCost }) => {
               color="inherit"
             >
               <img
-                src={logo}
+                src="https://github.com/DwinaTech/public-images/blob/main/DwinaTech-brand.png?raw=true"
                 alt="DwinaTech logo"
                 height="25px"
                 className="logo"
