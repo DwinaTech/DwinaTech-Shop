@@ -1,4 +1,3 @@
-import React from "react";
 import CustomCard from "../CustomCard";
 
 const Product = ({ basket, product, addProduct, RemoveItemFromBasket }) => (

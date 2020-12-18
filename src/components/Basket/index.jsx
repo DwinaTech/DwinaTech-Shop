@@ -1,4 +1,3 @@
-import React from "react";
 import { Grid, Button, Container } from "@material-ui/core";
 import CustomCard from "../CustomCard";
 import Banner from "./Banner";
