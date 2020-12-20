@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Paper, Container, Typography } from "@material-ui/core";
+import { Paper, Divider, Container, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { commerce } from "../../lib/commerce";
 import { renderRelatedComponent } from "./helpers";
@@ -23,7 +23,7 @@ const Checkout = ({ basketData, orderInfo }) => {
     shippingSubdivision: "",
     shippingSubdivisions: [],
   });
-  const [bookingSteps, setBookingSteps] = useState(0);
+  const [bookingStep, setBookingStep] = useState("order-address");
   const [checkoutData, setCheckoutData] = useState("");
 
   useEffect(() => {
@@ -95,17 +95,17 @@ const Checkout = ({ basketData, orderInfo }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setBookingSteps(bookingSteps + 1);
+    setBookingStep("order-details");
   };
 
-  const handleNextStep = (e) => {
+  const handleNextStep = (e, step) => {
     e.preventDefault();
-    setBookingSteps(bookingSteps + 1);
+    setBookingStep(step);
   };
 
-  const handleBackStep = (e) => {
+  const handleBackStep = (e, step) => {
     e.preventDefault();
-    setBookingSteps(bookingSteps - 1);
+    setBookingStep(step);
   };
 
   const handleChange = (e) => {
@@ -121,13 +121,13 @@ const Checkout = ({ basketData, orderInfo }) => {
         });
         setCheckoutData(response);
       } catch (error) {
-        if (error && bookingSteps !== 1) history.push("/");
+        if (error && bookingStep !== 1) history.push("/");
       }
     };
     if (!checkoutData.live) {
       generateToken();
     }
-  }, [checkoutData, basketData, bookingSteps, history]);
+  }, [checkoutData, basketData, bookingStep, history]);
 
   if (!checkoutData.live) {
     return null;
@@ -140,10 +140,11 @@ const Checkout = ({ basketData, orderInfo }) => {
           <Typography align="center" variant="h5" gutterBottom>
             Checkout
           </Typography>
+          <Divider />
           {renderRelatedComponent({
             user,
             orderInfo,
-            bookingSteps,
+            bookingStep,
             handleChange,
             handleSubmit,
             checkoutData,

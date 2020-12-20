@@ -10,7 +10,7 @@ import {
 const BookingDetails = ({ checkoutData, handleBackStep, handleNextStep }) => (
   <>
     <Typography variant="h6">Order details</Typography>
-    <List dense>
+    <List>
       {checkoutData.live.line_items.map((item) => (
         <ListItem key={item.id}>
           <ListItemText
@@ -31,11 +31,15 @@ const BookingDetails = ({ checkoutData, handleBackStep, handleNextStep }) => (
     </List>
 
     <div className="actions">
-      <Button size="medium" onClick={handleBackStep} variant="contained">
+      <Button
+        size="medium"
+        onClick={(e) => handleBackStep(e, "order-address")}
+        variant="contained"
+      >
         Go Back
       </Button>
       <Button
-        onClick={handleNextStep}
+        onClick={(e) => handleNextStep(e, "order-payment")}
         size="medium"
         color="secondary"
         variant="contained"
