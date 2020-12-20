@@ -1,0 +1,22 @@
+.checkout {
+  margin-top: 120px;
+  padding-bottom: 15px;
+}
+
+.checkout .paper {
+  max-width: 600px;
+  padding: 10px 15px;
+  margin: 0 auto;
+  background-color: #c9d1d9;
+}
+
+.checkout .paper .actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkout .paper .actions a {
+  margin-right: 15px;
+  margin-left: 0;
+}
