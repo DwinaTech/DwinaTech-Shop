@@ -33,7 +33,13 @@ const NavBar = ({ basketItems, totalCost }) => {
                 className="logo"
               />
             </Typography>
-            {location.pathname === "/" ? (
+            {location.pathname === "/basket" ? (
+              <div className="basket-wrapper">
+                <h2>
+                  Total cost: <strong>{totalCost}</strong>
+                </h2>
+              </div>
+            ) : (
               <div className="basket-wrapper">
                 <IconButton
                   component={Link}
@@ -45,12 +51,6 @@ const NavBar = ({ basketItems, totalCost }) => {
                     <ShoppingCart className="custom-basket" />
                   </Badge>
                 </IconButton>
-              </div>
-            ) : (
-              <div className="basket-wrapper">
-                <h2>
-                  Total cost: <strong>{totalCost}</strong>
-                </h2>
               </div>
             )}
           </Toolbar>
