@@ -1,4 +1,5 @@
 import { Grid, Button, Container } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import CustomCard from "../CustomCard";
 import Banner from "./Banner";
 
@@ -36,6 +37,15 @@ const Basket = ({
           onClick={handleEmptyBasket}
         >
           Empty Basket
+        </Button>
+
+        <Button
+          size="small"
+          variant="contained"
+          component={Link}
+          to="/checkout"
+        >
+          Checkout
         </Button>
       </div>
     </Container>
