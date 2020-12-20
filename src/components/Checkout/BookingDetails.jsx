@@ -9,9 +9,7 @@ import {
 
 const BookingDetails = ({ checkoutData, handleBackStep, handleNextStep }) => (
   <>
-    <Typography align="center" variant="h6" gutterBottom>
-      Order Details
-    </Typography>
+    <Typography variant="h6">Order details</Typography>
     <List dense>
       {checkoutData.live.line_items.map((item) => (
         <ListItem key={item.id}>
