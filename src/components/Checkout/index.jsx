@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
-import { Paper, Divider, Container, Typography } from "@material-ui/core";
+import {
+  Step,
+  Paper,
+  Stepper,
+  StepLabel,
+  Container,
+  Typography,
+} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { commerce } from "../../lib/commerce";
 import { renderRelatedComponent } from "./helpers";
 import "./style.css";
+
+const steps = ["order-address", "order-details", "order-payment"];
 
 const convertObjectToArray = (countries) =>
   Object.entries(countries || {}).map(([code, name]) => ({ code, name }));
@@ -140,7 +149,18 @@ const Checkout = ({ basketData, orderInfo }) => {
           <Typography align="center" variant="h5" gutterBottom>
             Checkout
           </Typography>
-          <Divider />
+          {bookingStep !== "confirmation" && (
+            <Stepper
+              className="stepper"
+              activeStep={steps.indexOf(bookingStep)}
+            >
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          )}
           {renderRelatedComponent({
             user,
             orderInfo,

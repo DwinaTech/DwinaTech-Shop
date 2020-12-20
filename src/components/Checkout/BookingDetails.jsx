@@ -9,7 +9,6 @@ import {
 
 const BookingDetails = ({ checkoutData, handleBackStep, handleNextStep }) => (
   <>
-    <Typography variant="h6">Order details</Typography>
     <List>
       {checkoutData.live.line_items.map((item) => (
         <ListItem key={item.id}>

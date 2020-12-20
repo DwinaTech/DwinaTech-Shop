@@ -62,7 +62,6 @@ const Payment = ({
 
   return (
     <>
-      <Typography variant="h6">Payment method</Typography>
       <Elements stripe={stripePromise}>
         <ElementsConsumer>
           {({ elements, stripe }) => (

@@ -14,11 +14,6 @@
   margin: 20px 0;
 }
 
-.checkout ul,
-.checkout ul li {
-  padding: 0;
-}
-
 .checkout .paper .actions.payment-actions {
   margin-top: 25px;
 }
@@ -31,4 +26,8 @@
 .checkout .paper .actions a {
   margin-right: 15px;
   margin-left: 0;
+}
+
+.checkout .paper .stepper {
+  background-color: #c8d1d9;
 }

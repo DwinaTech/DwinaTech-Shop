@@ -27,7 +27,6 @@ const CheckoutForm = ({
 
   return (
     <>
-      <Typography variant="h6">Order address</Typography>
       <form onSubmit={handleSubmit} autoComplete="off">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
