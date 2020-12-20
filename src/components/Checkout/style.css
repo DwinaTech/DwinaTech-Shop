@@ -19,6 +19,9 @@
   padding: 0;
 }
 
+.checkout .paper .actions.payment-actions {
+  margin-top: 25px;
+}
 .checkout .paper .actions {
   margin-top: 15px;
   display: flex;
