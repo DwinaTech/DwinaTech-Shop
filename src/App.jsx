@@ -5,10 +5,13 @@ import { commerce } from "./lib/commerce";
 import NavBar from "./components/NavBar";
 import Products from "./components/Products";
 import Basket from "./components/Basket";
+import Checkout from "./components/Checkout";
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [basketData, setBasketData] = useState({});
+  const [orderInfo, setOrderInfo] = useState({});
+  const [orderError, setOrderError] = useState("");
 
   const fetchProducts = async () => {
     const response = await commerce.products.list();
@@ -40,6 +43,28 @@ const App = () => {
     setBasketData(response.cart);
   };
 
+  const refreshBasket = async () => {
+    const newBasketData = await commerce.cart.refresh();
+    setBasketData(newBasketData);
+  };
+
+  const handleCheckout = async (checkoutId, orderData) => {
+    try {
+      const incomingOrder = await commerce.checkout.capture(
+        checkoutId,
+        orderData
+      );
+
+      setOrderInfo(incomingOrder);
+
+      refreshBasket();
+    } catch (error) {
+      console.log("handleCheckout Error ====>>>>>", error);
+
+      setOrderError(error.data.error.message);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
     fetchBasketData();
@@ -67,6 +92,14 @@ const App = () => {
               updateProduct={updateProduct}
               handleEmptyBasket={handleEmptyBasket}
               RemoveItemFromBasket={RemoveItemFromBasket}
+            />
+          </Route>
+          <Route exact path="/checkout">
+            <Checkout
+              orderInfo={orderInfo}
+              orderError={orderError}
+              basketData={basketData}
+              handleCheckout={handleCheckout}
             />
           </Route>
         </Switch>
