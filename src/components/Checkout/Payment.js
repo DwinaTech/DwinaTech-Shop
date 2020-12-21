@@ -31,31 +31,30 @@ const Payment = ({
       console.log("Error ======>>>>", error);
     } else {
       const orderData = {
-        line_items: checkoutData.live.line_items,
-        customer: {
-          firstname: user.firstName,
-          lastname: user.lastName,
-          email: user.email,
-        },
-        shipping: {
-          name: "International",
-          street: user.address,
-          town_city: user.city,
-          county_state: user.shippingSubdivision,
-          postal_zip_code: user.postcode,
-          country: user.shippingCountry,
-        },
-        fulfillment: { shipping_method: user.shippingOptions },
         payment: {
           gateway: "stripe",
           stripe: {
             payment_method_id: paymentMethod.id,
           },
         },
+        shipping: {
+          name: "stander",
+          street: user.address,
+          town_city: user.city,
+          county_state: user.shippingSubdivision,
+          postal_zip_code: user.postcode,
+          country: user.shippingCountry,
+        },
+        customer: {
+          firstname: user.firstName,
+          lastname: user.lastName,
+          email: user.email,
+        },
+        line_items: checkoutData.live.line_items,
+        fulfillment: { shipping_method: user.shippingOptions },
       };
 
       handleCheckout(checkoutData.id, orderData);
-
       handleNextStep(e, "confirmation");
     }
   };
