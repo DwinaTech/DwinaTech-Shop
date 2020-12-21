@@ -50,17 +50,15 @@ const App = () => {
 
   const handleCheckout = async (checkoutId, orderData) => {
     try {
-      const incomingOrder = await commerce.checkout.capture(
-        checkoutId,
-        orderData
-      );
+      // const incomingOrder = await commerce.checkout.capture(
+      //   checkoutId,
+      //   orderData
+      // );
 
-      setOrderInfo(incomingOrder);
+      setOrderInfo(orderData);
 
       refreshBasket();
     } catch (error) {
-      console.log("handleCheckout Error ====>>>>>", error);
-
       setOrderError(
         (error.data && error.data.error && error.data.error.message) ||
           "There is an error occurred"
