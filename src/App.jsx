@@ -61,7 +61,10 @@ const App = () => {
     } catch (error) {
       console.log("handleCheckout Error ====>>>>>", error);
 
-      setOrderError(error.data.error.message);
+      setOrderError(
+        (error.data && error.data.error && error.data.error.message) ||
+          "There is an error occurred"
+      );
     }
   };
 
