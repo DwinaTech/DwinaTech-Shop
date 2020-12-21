@@ -6,6 +6,7 @@ import {
   StepLabel,
   Container,
   Typography,
+  CircularProgress,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { commerce } from "../../lib/commerce";
@@ -17,7 +18,7 @@ const steps = ["order-address", "order-details", "order-payment"];
 const convertObjectToArray = (countries) =>
   Object.entries(countries || {}).map(([code, name]) => ({ code, name }));
 
-const Checkout = ({ basketData, orderInfo }) => {
+const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
   const [user, setUser] = useState({
     city: "",
     email: "",
@@ -48,6 +49,7 @@ const Checkout = ({ basketData, orderInfo }) => {
           region: stateProvince,
         }
       );
+
       setUser({
         ...user,
         shippingOptions: options,
@@ -66,39 +68,6 @@ const Checkout = ({ basketData, orderInfo }) => {
     user.shippingCountry.code,
     user.shippingSubdivision,
   ]);
-
-  useEffect(() => {
-    const fetchSubdivisions = async (countryCode) => {
-      const { subdivisions } = await commerce.services.localeListSubdivisions(
-        countryCode
-      );
-      const shippingSubdivisions = convertObjectToArray(subdivisions);
-      setUser({
-        ...user,
-        shippingSubdivisions,
-        shippingSubdivision: shippingSubdivisions[0],
-      });
-    };
-    if (user.shippingCountry.code && !user.shippingSubdivisions.length)
-      fetchSubdivisions(user.shippingCountry.code);
-  }, [user]);
-
-  useEffect(() => {
-    const fetchShippingCountries = async () => {
-      const { countries } = await commerce.services.localeListShippingCountries(
-        checkoutData.id
-      );
-      const FormattedCountries = convertObjectToArray(countries);
-      setUser({
-        ...user,
-        shippingCountries: FormattedCountries,
-        shippingCountry: FormattedCountries[FormattedCountries.length - 1],
-      });
-    };
-    if (!user.shippingCountries.length) {
-      fetchShippingCountries();
-    }
-  }, [user, checkoutData]);
 
   const history = useHistory();
 
@@ -123,23 +92,75 @@ const Checkout = ({ basketData, orderInfo }) => {
   };
 
   useEffect(() => {
-    const generateToken = async () => {
-      try {
-        const response = await commerce.checkout.generateToken(basketData.id, {
-          type: "cart",
-        });
-        setCheckoutData(response);
-      } catch (error) {
-        if (error && bookingStep !== 1) history.push("/");
-      }
-    };
-    if (!checkoutData.live) {
+    if (basketData.id) {
+      const generateToken = async () => {
+        try {
+          const response = await commerce.checkout.generateToken(
+            basketData.id,
+            {
+              type: "cart",
+            }
+          );
+          setCheckoutData(response);
+        } catch (error) {
+          // if (error) history.push("/");
+        }
+      };
       generateToken();
     }
-  }, [checkoutData, basketData, bookingStep, history]);
+  }, [basketData, history]);
 
-  if (!checkoutData.live) {
-    return null;
+  useEffect(() => {
+    const fetchShippingCountries = async () => {
+      const { countries } = await commerce.services.localeListShippingCountries(
+        checkoutData.id
+      );
+      const FormattedCountries = convertObjectToArray(countries);
+      setUser({
+        ...user,
+        shippingCountries: FormattedCountries,
+        shippingCountry: FormattedCountries[FormattedCountries.length - 1],
+      });
+    };
+    if (!user.shippingCountries.length && checkoutData.id) {
+      fetchShippingCountries();
+    }
+  }, [user, checkoutData]);
+
+  useEffect(() => {
+    const fetchSubdivisions = async (countryCode) => {
+      const { subdivisions } = await commerce.services.localeListSubdivisions(
+        countryCode
+      );
+
+      const shippingSubdivisions = convertObjectToArray(subdivisions);
+      setUser({
+        ...user,
+        shippingSubdivisions,
+        shippingSubdivision: shippingSubdivisions[0],
+      });
+    };
+    if (user.shippingCountry.code && !user.shippingSubdivisions.length)
+      fetchSubdivisions(user.shippingCountry.code);
+  }, [user]);
+
+  if (
+    !user.shippingSubdivisions.length ||
+    !user.shippingCountries.length ||
+    !user.shippingOptions.length ||
+    !checkoutData.live
+  ) {
+    return (
+      <div className="checkout">
+        <Container>
+          <Paper className="paper" elevation={3}>
+            <div className="spinner">
+              <CircularProgress />
+            </div>
+          </Paper>
+        </Container>
+      </div>
+    );
   }
 
   return (
@@ -164,12 +185,14 @@ const Checkout = ({ basketData, orderInfo }) => {
           {renderRelatedComponent({
             user,
             orderInfo,
+            orderError,
             bookingStep,
             handleChange,
             handleSubmit,
             checkoutData,
             handleBackStep,
             handleNextStep,
+            handleCheckout,
           })}
         </Paper>
       </Container>

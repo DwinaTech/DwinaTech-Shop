@@ -1,12 +1,6 @@
-import {
-  Button,
-  Divider,
-  Typography,
-  CircularProgress,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
 import CheckoutForm from "./CheckoutForm";
 import BookingDetails from "./BookingDetails";
+import Confirmation from "./Confirmation";
 import Payment from "./Payment";
 
 export const renderRelatedComponent = ({
@@ -53,42 +47,7 @@ export const renderRelatedComponent = ({
         />
       );
     case "confirmation":
-      return () => {
-        if (orderError) {
-          return (
-            <>
-              <Typography variant="h5">Error: {orderError}</Typography>
-              <br />
-              <Button component={Link} variant="outlined" type="button" to="/">
-                Back to home
-              </Button>
-            </>
-          );
-        }
-        return orderInfo.customer ? (
-          <>
-            <div>
-              <Typography variant="h5">
-                Thank you {orderInfo.customer.firstname}{" "}
-                {orderInfo.customer.lastname} for your purchase!
-              </Typography>
-              <Divider className="divider" />
-              <Typography variant="subtitle2">
-                Order ref: {orderInfo.customer_reference}
-              </Typography>
-            </div>
-            <br />
-            <Button component={Link} variant="outlined" type="button" to="/">
-              Continue shopping
-            </Button>
-          </>
-        ) : (
-          <div className="spinner">
-            <CircularProgress />
-          </div>
-        );
-      };
-
+      return <Confirmation orderInfo={orderInfo} orderError={orderError} />;
     default:
       return null;
   }
