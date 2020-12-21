@@ -69,8 +69,8 @@ export const renderRelatedComponent = ({
           <>
             <div>
               <Typography variant="h5">
-                Thank you for your purchase, {orderInfo.customer.firstname}{" "}
-                {orderInfo.customer.lastname}!
+                Thank you {orderInfo.customer.firstname}{" "}
+                {orderInfo.customer.lastname} for your purchase!
               </Typography>
               <Divider className="divider" />
               <Typography variant="subtitle2">
@@ -79,7 +79,7 @@ export const renderRelatedComponent = ({
             </div>
             <br />
             <Button component={Link} variant="outlined" type="button" to="/">
-              Back to home
+              Continue shopping
             </Button>
           </>
         ) : (
