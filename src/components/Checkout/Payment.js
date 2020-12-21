@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import {
   Elements,
   CardElement,
