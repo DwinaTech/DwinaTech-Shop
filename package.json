@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "install": "npm --prefix server install && npm --prefix client install",
-    "start": "npm --prefix server start",
+    "start": "node server.js",
     "heroku-postbuild": "npm --prefix client run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
