@@ -23,9 +23,15 @@
 /* ========= Basket Banner =========== */
 .basket-banner {
   padding-top: 150px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: #21262d;
+  background-image: linear-gradient(to bottom right, #121212, #3d4a5d);
 }
 
-.basket-banner > div {
+.basket-banner > div > div {
   align-items: center;
 }
 

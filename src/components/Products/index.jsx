@@ -7,7 +7,7 @@ const Products = ({ products, addProduct }) => {
   if (!products.length) return <p>Loading...</p>;
 
   return (
-    <>
+    <div>
       <Banner />
       <Container id="products">
         <Grid container spacing={4}>
@@ -18,7 +18,7 @@ const Products = ({ products, addProduct }) => {
           ))}
         </Grid>
       </Container>
-    </>
+    </div>
   );
 };
 
