@@ -1,3 +1,0 @@
-rules:
-  '@typescript-eslint/triple-slash-reference': 0
-  '@typescript-eslint/adjacent-overload-signatures': 0
