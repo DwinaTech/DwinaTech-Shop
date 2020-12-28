@@ -15,7 +15,7 @@ const Banner = () => {
               Shopping
             </Button>
           </Grid>
-          <Grid className="brand" item xs={12} sm={6}>
+          <Grid className="brand" item sm={6}>
             <img src={logo} alt="Brand-tv" />
           </Grid>
         </Grid>

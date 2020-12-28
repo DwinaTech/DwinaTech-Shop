@@ -1,5 +1,5 @@
 .banner {
-  padding-top: 150px;
+  padding-top: 180px;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -33,17 +33,7 @@
 }
 
 @media (min-width: 800px) {
-  .banner {
-    padding-top: 110px;
-  }
-
   .banner .title {
     font-size: 65px;
-  }
-}
-
-@media (min-width: 940px) {
-  .banner {
-    padding-top: 30px;
   }
 }

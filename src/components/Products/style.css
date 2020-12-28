@@ -1,9 +1,3 @@
 #products {
   padding-top: 120px;
 }
-
-@media (min-width: 800px) {
-  #products {
-    padding-top: 70px;
-  }
-}
