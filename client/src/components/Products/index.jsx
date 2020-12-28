@@ -1,10 +1,11 @@
 import { Grid, Container } from "@material-ui/core";
 import Product from "../Product";
+import Spinner from "../Spinner";
 import Banner from "../Banner";
 import "./style.css";
 
 const Products = ({ products, addProduct }) => {
-  if (!products.length) return <p>Loading...</p>;
+  if (!products.length) return <Spinner />;
 
   return (
     <div>
