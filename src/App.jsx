@@ -3,6 +3,7 @@ import { CssBaseline } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { commerce } from "./lib/commerce";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import Products from "./components/Products";
 import Basket from "./components/Basket";
 import Checkout from "./components/Checkout";
@@ -104,6 +105,7 @@ const App = () => {
             />
           </Route>
         </Switch>
+        <Footer />
       </div>
     </Router>
   );
