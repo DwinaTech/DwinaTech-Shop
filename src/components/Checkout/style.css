@@ -32,7 +32,7 @@
   background-color: #c8d1d9;
 }
 
-.spinner {
+.products-spinner {
   display: flex;
   justify-content: center;
   margin: 40px 0;
@@ -40,4 +40,9 @@
 
 .confirmation h5 {
   margin: 20px 0;
+}
+
+.confirmation a {
+  color: #000000;
+  background-color: #03dac5;
 }

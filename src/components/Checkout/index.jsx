@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Step,
   Paper,
@@ -18,6 +18,14 @@ const steps = ["order-address", "order-details", "order-payment"];
 const convertObjectToArray = (countries) =>
   Object.entries(countries || {}).map(([code, name]) => ({ code, name }));
 
+const usePreviousState = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
+
 const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
   const [user, setUser] = useState({
     city: "",
@@ -26,48 +34,20 @@ const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
     postCode: "",
     lastName: "",
     firstName: "",
-    shippingOption: "",
+    shippingOption: {},
     shippingOptions: [],
     shippingCountry: {},
     shippingCountries: [],
-    shippingSubdivision: "",
+    shippingSubdivision: {},
     shippingSubdivisions: [],
   });
   const [bookingStep, setBookingStep] = useState("order-address");
   const [checkoutData, setCheckoutData] = useState("");
 
-  useEffect(() => {
-    const fetchShippingOptions = async (
-      checkoutDataId,
-      country,
-      stateProvince = null
-    ) => {
-      const options = await commerce.checkout.getShippingOptions(
-        checkoutDataId,
-        {
-          country,
-          region: stateProvince,
-        }
-      );
-
-      setUser({
-        ...user,
-        shippingOptions: options,
-        shippingOption: options[0].id,
-      });
-    };
-    if (user.shippingSubdivision && !user.shippingOptions.length)
-      fetchShippingOptions(
-        checkoutData.id,
-        user.shippingCountry.code,
-        user.shippingSubdivision.code
-      );
-  }, [
-    user,
-    checkoutData.id,
-    user.shippingCountry.code,
-    user.shippingSubdivision,
-  ]);
+  const previousShippingCountry = usePreviousState(user.shippingCountry);
+  const previousShippingSubdivision = usePreviousState(
+    user.shippingSubdivision
+  );
 
   const history = useHistory();
 
@@ -91,6 +71,26 @@ const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
     setUser({ ...user, [name]: value });
   };
 
+  const handleSelectChange = (e, state) => {
+    const { name, value } = e.target;
+    if (state === "shippingOptions") {
+      setUser({
+        ...user,
+        [name]: {
+          id: value,
+        },
+      });
+    } else {
+      setUser({
+        ...user,
+        [name]: {
+          name: user[state].find((country) => country.code === value).name,
+          code: value,
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     if (basketData.id) {
       const generateToken = async () => {
@@ -103,7 +103,7 @@ const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
           );
           setCheckoutData(response);
         } catch (error) {
-          // if (error) history.push("/");
+          console.error("Checkout error: ", error);
         }
       };
       generateToken();
@@ -140,9 +140,53 @@ const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
         shippingSubdivision: shippingSubdivisions[0],
       });
     };
-    if (user.shippingCountry.code && !user.shippingSubdivisions.length)
+
+    if (
+      (user.shippingCountry.code && !user.shippingSubdivisions.length) ||
+      (previousShippingCountry &&
+        previousShippingCountry.code !== user.shippingCountry.code)
+    )
       fetchSubdivisions(user.shippingCountry.code);
-  }, [user]);
+  }, [user, previousShippingCountry]);
+
+  useEffect(() => {
+    const fetchShippingOptions = async (
+      checkoutDataId,
+      country,
+      stateProvince = null
+    ) => {
+      const options = await commerce.checkout.getShippingOptions(
+        checkoutDataId,
+        {
+          country,
+          region: stateProvince,
+        }
+      );
+
+      setUser({
+        ...user,
+        shippingOptions: options,
+        shippingOption: { id: options[0].id },
+      });
+    };
+
+    if (
+      (user.shippingSubdivision.code && !user.shippingOptions.length) ||
+      (previousShippingSubdivision &&
+        previousShippingSubdivision.code !== user.shippingSubdivision.code)
+    )
+      fetchShippingOptions(
+        checkoutData.id,
+        user.shippingCountry.code,
+        user.shippingSubdivision.code
+      );
+  }, [
+    user,
+    checkoutData.id,
+    user.shippingCountry.code,
+    user.shippingSubdivision,
+    previousShippingSubdivision,
+  ]);
 
   if (
     !user.shippingSubdivisions.length ||
@@ -154,7 +198,7 @@ const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
       <div className="checkout">
         <Container>
           <Paper className="paper" elevation={3}>
-            <div className="spinner">
+            <div className="products-spinner">
               <CircularProgress />
             </div>
           </Paper>
@@ -193,6 +237,7 @@ const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
             handleBackStep,
             handleNextStep,
             handleCheckout,
+            handleSelectChange,
           })}
         </Paper>
       </Container>
