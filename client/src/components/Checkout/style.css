@@ -41,3 +41,8 @@
 .confirmation h5 {
   margin: 20px 0;
 }
+
+.confirmation a {
+  color: #000000;
+  background-color: #03dac5;
+}

@@ -103,7 +103,7 @@ const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
           );
           setCheckoutData(response);
         } catch (error) {
-          if (error) history.push("/");
+          console.error("Checkout error: ", error);
         }
       };
       generateToken();
@@ -169,10 +169,10 @@ const Checkout = ({ basketData, orderInfo, orderError, handleCheckout }) => {
         shippingOption: { id: options[0].id },
       });
     };
+
     if (
-      (user.shippingSubdivision && !user.shippingOptions.length) ||
+      (user.shippingSubdivision.code && !user.shippingOptions.length) ||
       (previousShippingSubdivision &&
-        previousShippingSubdivision.code &&
         previousShippingSubdivision.code !== user.shippingSubdivision.code)
     )
       fetchShippingOptions(

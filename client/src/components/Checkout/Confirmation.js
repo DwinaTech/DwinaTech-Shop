@@ -18,7 +18,7 @@ const Confirmation = ({ orderInfo, orderError }) => {
         Thank you {orderInfo.customer.firstname} {orderInfo.customer.lastname}{" "}
         for your purchase!
       </Typography>
-      <Button component={Link} variant="outlined" type="button" to="/">
+      <Button component={Link} variant="contained" type="button" to="/">
         Continue shopping
       </Button>
     </div>
