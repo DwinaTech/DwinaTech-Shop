@@ -1,26 +1,13 @@
-# Available Scripts
+# Dwinatech-shop
+  It is an e-commerce application, create by using React.js (Hooks), Matrial-UI, Commerce.js and Stripe.js, created for education and learning purpose.
+  
+## How to develop it
+- Clone on your local machine by using `clone repo-remote`
+- Navigate into the main directory
+- Run `npm install` to install node modules
+- Run `npm start` to run it locally then will open automatclly on your browser on `localhost:3000` port
+- Run `npm run build` to create a production build
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## UI
+### Mobile, IPad and Desktop
+<img src="https://github.com/DwinaTech/public-images/blob/main/React-portfolio-2.jpg?raw=true" alt="website-image" />
