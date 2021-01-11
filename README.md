@@ -1,7 +1,7 @@
 # Dwinatech-shop
   It is an e-commerce application, create by using React.js (Hooks), Matrial-UI, Commerce.js and Stripe.js, created for education and learning purpose.
   
-  Demo: dwinatech-shop.herokuapp.com/
+  Demo: https://dwinatech-shop.herokuapp.com/
   
 ## How to develop it
 - Clone on your local machine by using `clone git@github.com:DwinaTech/DwinaTech-Shop.git`
