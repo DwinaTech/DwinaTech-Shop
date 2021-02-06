@@ -17,7 +17,6 @@ const ProductView = ({ addProduct }) => {
 
   const fetchProduct = async (id) => {
     const response = await commerce.products.retrieve(id);
-    console.log({ response });
     const { name, price, media, quantity, description } = response;
     setProduct({
       id,
