@@ -10,8 +10,9 @@ const createMarkup = (text) => {
   return { __html: text };
 };
 
-const ProductView = ({ addProduct, updateProduct, RemoveItemFromBasket }) => {
+const ProductView = ({ addProduct }) => {
   const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
 
   const fetchProduct = async (id) => {
@@ -19,6 +20,7 @@ const ProductView = ({ addProduct, updateProduct, RemoveItemFromBasket }) => {
     console.log({ response });
     const { name, price, media, quantity, description } = response;
     setProduct({
+      id,
       name,
       quantity,
       description,
@@ -31,6 +33,15 @@ const ProductView = ({ addProduct, updateProduct, RemoveItemFromBasket }) => {
     const id = window.location.pathname.split("/");
     fetchProduct(id[2]);
   }, []);
+
+  const handleQuantity = (param) => {
+    if (param === "decries" && quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+    if (param === "increase" && quantity < 10) {
+      setQuantity(quantity + 1);
+    }
+  };
 
   return (
     <Container className="product-view">
@@ -58,14 +69,14 @@ const ProductView = ({ addProduct, updateProduct, RemoveItemFromBasket }) => {
                 variant="contained"
                 className="increase-product-quantity"
                 onClick={() => {
-                  updateProduct(product.id, product.quantity + 1);
+                  handleQuantity("increase");
                 }}
               >
                 +
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Typography> Quantity: {product.quantity}</Typography>
+              <Typography> Quantity: {quantity}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Button
@@ -73,7 +84,7 @@ const ProductView = ({ addProduct, updateProduct, RemoveItemFromBasket }) => {
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  updateProduct(product.id, product.quantity - 1);
+                  handleQuantity("decries");
                 }}
               >
                 -
@@ -84,7 +95,7 @@ const ProductView = ({ addProduct, updateProduct, RemoveItemFromBasket }) => {
                 size="large"
                 className="custom-button"
                 onClick={() => {
-                  addProduct(product.id, 1);
+                  addProduct(product.id, quantity);
                 }}
               >
                 <ShoppingCart /> Add to basket

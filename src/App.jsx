@@ -106,7 +106,7 @@ const App = () => {
             />
           </Route>
           <Route exact path="/product-view/:id">
-            <ProductView />
+            <ProductView addProduct={addProduct} />
           </Route>
         </Switch>
         <Footer />
