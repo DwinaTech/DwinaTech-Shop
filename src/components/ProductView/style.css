@@ -18,15 +18,18 @@
 }
 
 .product-view .text span h1 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 300;
 }
 
 .product-view .text h3 {
   margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 300;
-  margin-bottom: 20px;
+}
+
+.product-view .text .quantity {
+  margin-bottom: 5px;
 }
 
 .MuiContainer-root.product-view .custom-button {

@@ -75,7 +75,9 @@ const ProductView = ({ addProduct }) => {
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Typography> Quantity: {quantity}</Typography>
+              <Typography className="quantity" variant="h3">
+                Quantity: {quantity}
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <Button
