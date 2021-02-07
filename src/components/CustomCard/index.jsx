@@ -8,9 +8,8 @@ import {
   Button,
 } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
-import "./style.css";
-
 import { Link } from "react-router-dom";
+import "./style.css";
 
 const CustomCard = ({
   basket,
@@ -21,7 +20,7 @@ const CustomCard = ({
 }) => {
   return (
     <Card className="custom-card">
-      <Link to={`product-view/${product.id}`}>
+      <Link to={`product-view/${basket ? product.product_id : product.id}`}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -42,7 +41,7 @@ const CustomCard = ({
             </Typography>
           </CardContent>
         </CardActionArea>
-        <h3>View</h3>
+        <Typography variant="h3">View</Typography>
       </Link>
       {basket && (
         <CardActions>
