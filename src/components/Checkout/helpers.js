@@ -6,15 +6,19 @@ import Payment from "./Payment";
 export const renderRelatedComponent = ({
   user,
   orderInfo,
+  totalPrice,
   orderError,
   bookingStep,
   handleChange,
   handleSubmit,
   checkoutData,
+  setTotalPrice,
   handleBackStep,
   handleNextStep,
   handleCheckout,
   handleSelectChange,
+  totalPriceWithCurrency,
+  setTotalPriceWithCurrency,
 }) => {
   switch (bookingStep) {
     case "order-address":
@@ -33,19 +37,23 @@ export const renderRelatedComponent = ({
         <BookingDetails
           user={user}
           checkoutData={checkoutData}
+          setTotalPrice={setTotalPrice}
           handleBackStep={handleBackStep}
           handleNextStep={handleNextStep}
           handleCheckout={handleCheckout}
+          setTotalPriceWithCurrency={setTotalPriceWithCurrency}
         />
       );
     case "order-payment":
       return (
         <Payment
           user={user}
+          totalPrice={totalPrice}
           checkoutData={checkoutData}
           handleBackStep={handleBackStep}
           handleNextStep={handleNextStep}
           handleCheckout={handleCheckout}
+          totalPriceWithCurrency={totalPriceWithCurrency}
         />
       );
     case "confirmation":

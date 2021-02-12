@@ -146,7 +146,7 @@ const CheckoutForm = ({
           >
             {user.shippingOptions.map((option) => (
               <MenuItem key={option.id} value={option.id}>
-                {`${option.description} - (${option.price.formatted_with_symbol})`}
+                {`Per product - (${option.price.formatted_with_symbol})`}
               </MenuItem>
             ))}
           </Select>

@@ -9,15 +9,17 @@ import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 const Payment = ({
   user,
+  totalPrice,
   checkoutData,
   handleBackStep,
   handleNextStep,
   handleCheckout,
+  totalPriceWithCurrency,
 }) => {
   const handleSubmit = async (e, elements, stripe) => {
     e.preventDefault();
 
-    if (!stripe || !elements) return;
+    if (!stripe || !elements || !totalPrice) return;
 
     const cardElement = elements.getElement(CardElement);
 
@@ -36,6 +38,7 @@ const Payment = ({
             payment_method_id: paymentMethod.id,
           },
         },
+        pay_what_you_want: totalPrice,
         shipping: {
           name: "stander",
           street: user.address,
@@ -78,7 +81,7 @@ const Payment = ({
                   disabled={!stripe}
                   color="primary"
                 >
-                  Pay {checkoutData.live.subtotal.formatted_with_symbol}
+                  Pay {totalPriceWithCurrency}
                 </Button>
               </div>
             </form>
