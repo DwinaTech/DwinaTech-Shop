@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Products from "./components/Products";
 import Basket from "./components/Basket";
 import Checkout from "./components/Checkout";
+import ProductView from "./components/ProductView";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -103,6 +104,9 @@ const App = () => {
               basketData={basketData}
               handleCheckout={handleCheckout}
             />
+          </Route>
+          <Route exact path="/product-view/:id">
+            <ProductView addProduct={addProduct} />
           </Route>
         </Switch>
         <Footer />
