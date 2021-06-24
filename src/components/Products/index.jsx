@@ -1,5 +1,6 @@
 import { Grid, Container, Typography } from "@material-ui/core";
 import Product from "../Product";
+import FilterProduct from "../FilterProduct";
 import Spinner from "../Spinner";
 import Banner from "../Banner";
 import "./style.css";
@@ -9,6 +10,7 @@ const Products = ({ categories, addProduct }) => {
 
   return (
     <div>
+      <FilterProduct />
       <Banner />
       <div id="products">
         {categories.map((category, index) =>
