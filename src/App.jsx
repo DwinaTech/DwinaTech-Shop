@@ -10,14 +10,27 @@ import Checkout from "./components/Checkout";
 import ProductView from "./components/ProductView";
 
 const App = () => {
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [basketData, setBasketData] = useState({});
   const [orderInfo, setOrderInfo] = useState({});
   const [orderError, setOrderError] = useState("");
 
-  const fetchProducts = async () => {
-    const response = await commerce.products.list();
-    setProducts((response && response.data) || []);
+  const fetchProductsPerCategory = async () => {
+    const { data: products } = await commerce.products.list({ limit: 200 });
+    const { data: categories } = await commerce.categories.list();
+    const productsPerCategory = categories.reduce((acc, category) => {
+      return [
+        ...acc,
+        {
+          ...category,
+          productsData: products.filter((product) =>
+            product.categories.find((cat) => cat.id === category.id)
+          ),
+        },
+      ];
+    }, []);
+
+    setCategories(productsPerCategory);
   };
 
   const fetchBasketData = async () => {
@@ -69,7 +82,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchProductsPerCategory();
     fetchBasketData();
   }, []);
 
@@ -87,7 +100,7 @@ const App = () => {
         />
         <Switch>
           <Route exact path="/">
-            <Products products={products} addProduct={addProduct} />
+            <Products categories={categories} addProduct={addProduct} />
           </Route>
           <Route exact path="/basket">
             <Basket
