@@ -36,11 +36,18 @@ const FilterProduct = ({
   const handleSelectChange = (event) => {
     const { value } = event.target;
     const category = categories.find((cat) => cat.id === value);
-    setSelectedCategory(category);
+    if (value === 0) {
+      setSelectedCategory(defaultCategory);
+    } else {
+      setSelectedCategory(category);
+    }
   };
 
   const onSubmoit = async (e) => {
     e.preventDefault();
+    if (!keyword) {
+      setResultMessage("You have to enter a product name");
+    }
     if (keyword) {
       try {
         const categoryId = selectedCategory.id
