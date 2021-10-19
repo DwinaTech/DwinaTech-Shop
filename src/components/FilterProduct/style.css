@@ -1,0 +1,32 @@
+.filter-bar {
+  margin-top: 100px;
+  padding: 20px;
+  background-color: #c8d1d9;
+}
+
+.filter-bar .root {
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.filter-bar .MuiInput-underline {
+  padding-left: 8px;
+}
+
+.filter-bar .MuiInput-underline:before,
+.filter-bar .MuiInput-underline:after {
+  display: none;
+}
+
+.result-message {
+  margin: 0;
+  font-size: 20px;
+  padding-top: 20px;
+  color: #000000;
+}
