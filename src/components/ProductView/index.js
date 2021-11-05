@@ -1,14 +1,58 @@
-import { Grid, Button, Container, Typography } from "@material-ui/core";
+import { Button, Container, Typography } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import { commerce } from "../../lib/commerce";
 import { useState, useEffect } from "react";
 import Spinner from "../Spinner";
-
-import "./style.css";
+import styled from "styled-components";
 
 const createMarkup = (text) => {
   return { __html: text };
 };
+
+const Wrapper = styled.div`
+  display: grid;
+  min-height: 75vh;
+  margin-top: 12vh;
+  padding-bottom: 20px;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+`;
+
+const ImgWrapper = styled.div`
+  margin-bottom: 20px;
+  img {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
+`;
+
+const TextWrapper = styled.div``;
+const Contents = styled.div``;
+const Actions = styled.div`
+  display: flex;
+  margin: 15px 0;
+  > button,
+  h5 {
+    margin-right: 10px;
+  }
+`;
+const AddToBasketButton = styled(Button)`
+  color: #000;
+  background-color: #bb86fc;
+  &:hover {
+    color: #c9d1d9;
+    background-color: #bb86fc;
+  }
+  svg {
+    margin-right: 10px;
+  }
+`;
 
 const ProductView = ({ addProduct }) => {
   const [product, setProduct] = useState({});
@@ -43,9 +87,9 @@ const ProductView = ({ addProduct }) => {
   };
 
   return (
-    <Container className="product-view">
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={8} className="image-wrapper">
+    <Container>
+      <Wrapper>
+        <ImgWrapper>
           <img
             onLoad={() => {
               setLoading(false);
@@ -53,33 +97,28 @@ const ProductView = ({ addProduct }) => {
             src={product.src}
             alt={product.name}
           />
-        </Grid>
-        <Grid item xs={12} md={4} className="text">
-          <Typography variant="h2">{product.name}</Typography>
+        </ImgWrapper>
+        <TextWrapper>
+          <Typography variant="h4">{product.name}</Typography>
           <Typography
-            variant="p"
+            variant="h6"
             dangerouslySetInnerHTML={createMarkup(product.description)}
           />
-          <Typography variant="h3">Price: {product.price}</Typography>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
+          <Typography variant="h5">Price: {product.price}</Typography>
+          <Contents>
+            <Actions>
               <Button
                 size="small"
                 variant="contained"
-                className="increase-product-quantity"
                 onClick={() => {
                   handleQuantity("increase");
                 }}
               >
                 +
               </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography className="quantity" variant="h3">
-                Quantity: {quantity}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
+
+              <Typography variant="h5">Quantity: {quantity}</Typography>
+
               <Button
                 size="small"
                 color="secondary"
@@ -90,22 +129,19 @@ const ProductView = ({ addProduct }) => {
               >
                 -
               </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                size="large"
-                className="custom-button"
-                onClick={() => {
-                  addProduct(product.id, quantity);
-                }}
-              >
-                <ShoppingCart /> Add to basket
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      {loading && <Spinner />}
+            </Actions>
+            <AddToBasketButton
+              size="large"
+              onClick={() => {
+                addProduct(product.id, quantity);
+              }}
+            >
+              <ShoppingCart /> Add to basket
+            </AddToBasketButton>
+          </Contents>
+        </TextWrapper>
+        {loading && <Spinner />}
+      </Wrapper>
     </Container>
   );
 };
