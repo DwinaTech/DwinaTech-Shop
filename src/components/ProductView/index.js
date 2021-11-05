@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   display: grid;
   min-height: 75vh;
   margin-top: 12vh;
+  grid-gap: 15px;
   padding-bottom: 20px;
   grid-template-columns: 1fr;
 
