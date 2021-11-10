@@ -28,7 +28,7 @@ const CustomCard = ({
             alt="Contemplative Reptile"
             height="260"
             className="card-image"
-            image={product.media.source}
+            image={product.image.url}
             title="Contemplative Reptile"
             style={{
               height: categoryName === "Smartphones" ? "440px" : "",

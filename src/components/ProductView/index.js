@@ -10,7 +10,8 @@ const createMarkup = (text) => {
 };
 
 const Wrapper = styled.div`
-  display: grid;
+  width: 100%;
+  display: flex;
   min-height: 75vh;
   margin-top: 12vh;
   grid-gap: 15px;
@@ -23,13 +24,26 @@ const Wrapper = styled.div`
 `;
 
 const ImgWrapper = styled.div`
+  width: 50%;
   margin-bottom: 20px;
-  img {
-    width: 100%;
+  text-align: center;
+  > img {
+    max-width: 320px;
   }
 
   @media (min-width: 768px) {
     margin-bottom: 0;
+  }
+`;
+
+const VariantsWrapper = styled.div`
+  display: flex;
+  height: 140px;
+
+  img {
+    max-width: 140px;
+    cursor: pointer;
+    margin-right: 10px;
   }
 `;
 
@@ -43,6 +57,12 @@ const Actions = styled.div`
     margin-right: 10px;
   }
 `;
+
+const VariantsTitle = styled(Typography)`
+  margin: 10px 0;
+  text-align: left;
+`;
+
 const AddToBasketButton = styled(Button)`
   color: #000;
   background-color: #bb86fc;
@@ -57,19 +77,24 @@ const AddToBasketButton = styled(Button)`
 
 const ProductView = ({ addProduct }) => {
   const [product, setProduct] = useState({});
+  const [originalPrice, setOriginalPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
 
   const fetchProduct = async (id) => {
     const response = await commerce.products.retrieve(id);
-    const { name, price, media, quantity, description } = response;
+    const { name, price, assets, image, variants, quantity, description } =
+      response;
+    setOriginalPrice(price.raw);
     setProduct({
       id,
       name,
+      assets,
+      variants,
       quantity,
       description,
-      src: media.source,
-      price: price.formatted_with_symbol,
+      src: image.url,
+      price: price.formatted_with_code,
     });
   };
 
@@ -87,6 +112,30 @@ const ProductView = ({ addProduct }) => {
     }
   };
 
+  const priceCalculator = (optionPrice) => {
+    if (optionPrice === originalPrice) {
+      return product.price;
+    }
+
+    const priceArray = product.price.split(" ");
+    const total = originalPrice + optionPrice;
+    return `${total} ${priceArray[1]}`;
+  };
+
+  const updateProduct = (optionPrice, src, { id, variantId }) => {
+    setProduct({
+      ...product,
+      price: priceCalculator(optionPrice),
+      src,
+      option: { [variantId]: id },
+    });
+  };
+
+  const getImageUrl = (assetId) => {
+    const relatedAsset = product.assets.find((pro) => pro.id === assetId);
+    return relatedAsset?.url || "";
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -98,7 +147,30 @@ const ProductView = ({ addProduct }) => {
             src={product.src}
             alt={product.name}
           />
+
+          {product.variants?.length ? (
+            <VariantsTitle variant="h4">
+              Select different colours.
+            </VariantsTitle>
+          ) : null}
+          <VariantsWrapper>
+            {product.variants?.length
+              ? product.variants[0].options?.map((pro) => (
+                  <img
+                    src={getImageUrl(pro.assets[0])}
+                    alt={pro.name}
+                    onClick={() =>
+                      updateProduct(pro.price.raw, getImageUrl(pro.assets[0]), {
+                        id: pro.id,
+                        variantId: product.variants[0].id,
+                      })
+                    }
+                  />
+                ))
+              : null}
+          </VariantsWrapper>
         </ImgWrapper>
+
         <TextWrapper>
           <Typography variant="h4">{product.name}</Typography>
           <Typography
@@ -134,7 +206,7 @@ const ProductView = ({ addProduct }) => {
             <AddToBasketButton
               size="large"
               onClick={() => {
-                addProduct(product.id, quantity);
+                addProduct(product.id, quantity, product.option);
               }}
             >
               <ShoppingCart /> Add to basket
