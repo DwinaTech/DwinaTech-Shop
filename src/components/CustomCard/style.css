@@ -46,10 +46,6 @@
 }
 
 .custom-card .card-image {
-  margin: 0 auto;
-  max-width: 100%;
-  max-height: 100%;
-  vertical-align: middle;
   padding: 10px 10px 0 10px;
 }
 
