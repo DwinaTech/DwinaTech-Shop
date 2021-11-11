@@ -47,8 +47,6 @@ const VariantsWrapper = styled.div`
   }
 `;
 
-const TextWrapper = styled.div``;
-const Contents = styled.div``;
 const Actions = styled.div`
   display: flex;
   margin: 15px 0;
@@ -171,14 +169,14 @@ const ProductView = ({ addProduct }) => {
           </VariantsWrapper>
         </ImgWrapper>
 
-        <TextWrapper>
+        <div>
           <Typography variant="h4">{product.name}</Typography>
           <Typography
             variant="h6"
             dangerouslySetInnerHTML={createMarkup(product.description)}
           />
           <Typography variant="h5">Price: {product.price}</Typography>
-          <Contents>
+          <div>
             <Actions>
               <Button
                 size="small"
@@ -211,8 +209,8 @@ const ProductView = ({ addProduct }) => {
             >
               <ShoppingCart /> Add to basket
             </AddToBasketButton>
-          </Contents>
-        </TextWrapper>
+          </div>
+        </div>
         {loading && <Spinner />}
       </Wrapper>
     </Container>
