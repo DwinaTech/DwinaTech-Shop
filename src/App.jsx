@@ -38,8 +38,10 @@ const App = () => {
     setBasketData(response);
   };
 
-  const addProduct = async (productId, quantity) => {
-    const response = await commerce.cart.add(productId, quantity);
+  const addProduct = async (productId, quantity, option = {}) => {
+    const response = await commerce.cart.add(productId, quantity, {
+      ...option,
+    });
     setBasketData(response.cart);
   };
 
